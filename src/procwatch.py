@@ -82,8 +82,9 @@ class procwatch:
                     pid = line.split('   ')[1].strip()
                 except IndexError:
                     pid = line.split('  ')[1].strip()
-        process = subprocess.Popen(
-            ['ps', '-q', pid, '-o', 'etime'], stdout=subprocess.PIPE, stderr=None)
-        out, _ = process.communicate()
-        elapsed = out.decode().split('\n ')[1].strip()  # Clean string for returning
-        return elapsed
+                process = subprocess.Popen(
+                    ['ps', '-q', pid, '-o', 'etime'], stdout=subprocess.PIPE, stderr=None)
+                out, _ = process.communicate()
+                elapsed = out.decode().split('\n ')[1].strip()  # Clean string for returning
+                return elapsed
+            return "00:00:00"
