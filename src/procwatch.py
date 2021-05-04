@@ -1,7 +1,6 @@
 import os
 import sys
 import subprocess
-from datetime import datetime
 
 class procwatch:
     def __init__(self, appName: str):
