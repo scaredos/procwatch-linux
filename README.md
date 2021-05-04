@@ -5,4 +5,4 @@ procwatch-linux is built for linux devices, for other operating systems, see [pr
 - For example usage, please see [example.py](https://github.com/scaredos/procwatch/blob/main/example/example.py)
 
 ## Installation
-for installation of procwatch-linux, please see [install.txt](https://github.com/scaredos/procwatch/blob/main/INSTALL.MD)
+for installation of procwatch-linux, please see [INSTALL.md](https://github.com/scaredos/procwatch/blob/main/INSTALL.md)
