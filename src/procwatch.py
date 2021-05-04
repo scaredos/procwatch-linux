@@ -1,3 +1,4 @@
+# Copyright (c) 2021 Steven
 import os
 import sys
 import subprocess
@@ -8,11 +9,11 @@ class procwatch:
         self.userid = str(os.getuid())
         self.runningApps = {}
 
-    def getRunningApps(self):
+    def getRunningProcs(self):
         """
-        Get a list of currently running processes along with their current RSS
+        Get list of running apps with the same appName and it's RSS
 
-        :return: A dict containing a list of all running processes
+        :return: A dict with all processes that correspond to the appName
         """
         app = self.appName
         process = subprocess.Popen(
@@ -45,7 +46,7 @@ class procwatch:
 
         :return: Current memory usage in Megabytes (float)
         """
-        processes = self.getRunningApps()
+        processes = self.getRunningProcs()
         final_rss = 0
         for proc in processes:
             final_rss += proc[self.appName]
@@ -57,7 +58,7 @@ class procwatch:
 
         :return: Current memory usage in Kilobytes (float)
         """
-        processes = self.getRunningApps()
+        processes = self.getRunningProcs()
         final_rss = 0
         for proc in processes:
             final_rss += proc[self.appName]
@@ -69,7 +70,7 @@ class procwatch:
 
         :return: String containing the elapsed time in (%H:%M:%S) format
         """
-        processes = self.getRunningApps()
+        processes = self.getRunningProcs()
         process = subprocess.Popen(
             ['ps', '-u', self.userid, '-o', 'rss,pid'], stdout=subprocess.PIPE, stderr=None)
         out, _ = process.communicate()
