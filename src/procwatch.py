@@ -3,6 +3,7 @@ import os
 import sys
 import subprocess
 
+
 class procwatch:
     def __init__(self, appName: str):
         self.appName = appName
@@ -31,13 +32,14 @@ class procwatch:
                     if item.isdigit():
                         if list[i + 1] in self.runningApps:
                             self.runningApps[list[i + 1]
-                                         ].append({list[i + 1]: int(item)})
+                                             ].append({list[i + 1]: int(item)})
                         else:
                             self.runningApps[list[i + 1]
-                                         ] = [{list[i + 1]: int(item)}]
+                                             ] = [{list[i + 1]: int(item)}]
         except IndexError:
             if app not in self.runningApps:
-                raise LookupError("Application is not running or is not accessable")
+                raise LookupError(
+                    "Application is not running or is not accessable")
             return self.runningApps[app]
 
     def getMemoryMb(self):
@@ -85,6 +87,25 @@ class procwatch:
                 process = subprocess.Popen(
                     ['ps', '-q', pid, '-o', 'etime'], stdout=subprocess.PIPE, stderr=None)
                 out, _ = process.communicate()
-                elapsed = out.decode().split('\n ')[1].strip()  # Clean string for returning
+                # Clean string for returning
+                elapsed = out.decode().split('\n ')[1].strip()
                 return elapsed
             return "00:00:00"
+
+    def getCpuUsage(self):
+        """
+        Get an application's curreny CPU usage as float
+
+        :return: Curreny CPU usage (float)
+        """
+        app = self.appName
+        process = subprocess.Popen(
+            ['ps', '-u', self.userid, '-o', '%cpu,app'], stdout=subprocess.PIPE, stderr=None)
+        out, _ = process.communicate()
+        output = out.decode().strip().split('\n')
+        final_cpu = 0
+        for item in output:
+            lines = item.strip().split(' ')
+            if lines[1] == app:
+                final_cpu += float(lines[0])
+        return final_cpu
